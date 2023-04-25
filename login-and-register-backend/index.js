@@ -51,7 +51,6 @@ app.post("/register", async (req, res) => {
       res.send({ error });
     }
   });
-  
   app.listen(9002, () => {
     console.log("BE started at port 9002");
   });
