@@ -29,12 +29,28 @@ const userSchema = new mongoose.Schema({
 
 
 const User = new mongoose.model("User", userSchema)
-
-  app.post("/login", async(req, res)=>
-  {
-    res.send("My API Login");
-  });
   
+
+  app.post("/login", async (req, res) => {
+    const {  email, password } = req.body;
+    try {
+      const user = await User.findOne({ email });
+      if (user) {
+        if(password == user.password){
+            res.send({message:"Login Successfull", user: user})
+        }
+        else{
+            res.send({message: "Incorrect Password!"})
+        }
+      } else{
+        res.send("User Not Registered!")
+      }
+    } catch (error) {
+      res.send({ error });
+    }
+  });
+
+
 
 app.post("/register", async (req, res) => {
     const { name, email, password } = req.body;
